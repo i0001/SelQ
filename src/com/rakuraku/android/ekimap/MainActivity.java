@@ -151,7 +151,7 @@ public class MainActivity extends Activity implements LoaderCallbacks<String> {
 		bundle.putString("x", Double.toString(cameraPos.target.longitude));
 
 		bundle.putString("moyori",
-				"http://webservice.recruit.co.jp/manabi/school_kyoten/v1?key=1e1a367879898972&"
+				"http://webservice.recruit.co.jp/manabi/school_kyoten/v1?key=XXX&"
 				/*"http://express.heartrails.com/api/json?method=getStations&"*/);
 
 		// LoaderManager‚Ì‰Šú‰»i1j
