@@ -6,15 +6,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ParseJson {
-	
+
 	protected String content;
 
 	// JSON文字列を、JsonNodeオブジェクトに変換する（1）
 	protected JsonNode getJsonNode(String str) {
-		
+
 		try {
 			return new ObjectMapper().readTree(str);
-		} 
+		}
 		catch (IOException e) {
 			Log.d(getClass().getName(), e.getMessage());
 		}

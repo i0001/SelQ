@@ -29,7 +29,7 @@ public class MainActivity extends Activity implements LoaderCallbacks<String> {
 	private GoogleMap googleMap = null;
 
 	// マーカーと駅情報のHashMap
-	private HashMap<Marker, EkiInfo> ekiMarkerMap;
+	private HashMap<Marker, SchoolInfo> ekiMarkerMap;
 
 	// 地図の中心位置
 	private CameraPosition centerPosition = null;
@@ -39,7 +39,7 @@ public class MainActivity extends Activity implements LoaderCallbacks<String> {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		ekiMarkerMap = new HashMap<Marker, EkiInfo>();
+		ekiMarkerMap = new HashMap<Marker, SchoolInfo>();
 
 		// MapFragmentを取得する(2)
 		MapFragment mapFragment = (MapFragment) getFragmentManager()
@@ -65,12 +65,9 @@ public class MainActivity extends Activity implements LoaderCallbacks<String> {
 							public void onInfoWindowClick(Marker marker) {
 
 								// 駅情報の取り出し
-								EkiInfo e = ekiMarkerMap.get(marker);
+								SchoolInfo e = ekiMarkerMap.get(marker);
 
-								Toast ts = Toast.makeText(getBaseContext(),
-										e.name + "(" + e.distance + "m)\n"
-										+ "前の駅:" + e.prev + "\n次の駅:" + e.next + "\n"
-										+ e.line, Toast.LENGTH_LONG);
+								Toast ts = Toast.makeText(getBaseContext(),"教室内容", Toast.LENGTH_LONG);
 								ts.setGravity(Gravity.TOP, 0, 200);
 								ts.show();
 
@@ -154,7 +151,8 @@ public class MainActivity extends Activity implements LoaderCallbacks<String> {
 		bundle.putString("x", Double.toString(cameraPos.target.longitude));
 
 		bundle.putString("moyori",
-				"http://express.heartrails.com/api/json?method=getStations&");
+				"http://webservice.recruit.co.jp/manabi/school_kyoten/v1?key=1e1a367879898972&"
+				/*"http://express.heartrails.com/api/json?method=getStations&"*/);
 
 		// LoaderManagerの初期化（1）
 		getLoaderManager().restartLoader(0, bundle, this);
@@ -201,12 +199,12 @@ public class MainActivity extends Activity implements LoaderCallbacks<String> {
 			ekiMarkerMap.clear();
 
 			// APIの結果をマーカーに反映する（2）
-			for (EkiInfo e : parse.getEkiinfo()) {
+			for (SchoolInfo e : parse.getSchoolInfo()) {
 
 				Marker marker = googleMap.addMarker(new MarkerOptions()
-						.position(new LatLng(e.y, e.x))
-						.title(e.name)
-						.snippet(e.line)
+						.position(new LatLng(e.lng_center, e.lat_center))
+						.title(e.school_name)
+						.snippet(e.content)
 						.icon(BitmapDescriptorFactory
 								.fromResource(R.drawable.ic_quest))); //(3)
 

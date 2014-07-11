@@ -31,14 +31,14 @@ public class HttpAsyncLoader extends AsyncTaskLoader<String> {
 		try {
 			String responseBody = httpClient.execute(new HttpGet(this.url),
 
-				// UTF-8縺ｫ蟇ｾ蠢懊＠縺滓枚蟄怜�繧定ｿ斐☆繧医≧縺ｫhandleResponse繧偵が繝ｼ繝舌�繝ｩ繧､繝峨☆繧�
+					// UTF-8に対応した文字列を返すようにhandleResponseをオーバーライドする
 				new ResponseHandler<String>() {
 
 					@Override
 					public String handleResponse(HttpResponse response)
 						throws ClientProtocolException,	IOException {
 
-						// 繝ｬ繧ｹ繝昴Φ繧ｹ繧ｳ繝ｼ繝峨′縲？ttpStatus.SC_OK��TTP 200�峨�蝣ｴ蜷医�縺ｿ縲∫ｵ先棡繧定ｿ斐☆
+						// レスポンスコードが、HttpStatus.SC_OK（HTTP 200）の場合のみ、結果を返す
 						if (HttpStatus.SC_OK == response.getStatusLine().getStatusCode()){
 							return EntityUtils.toString(response.getEntity(), "UTF-8");
 						}
@@ -52,7 +52,7 @@ public class HttpAsyncLoader extends AsyncTaskLoader<String> {
 			Log.e(this.getClass().getSimpleName(),e.getMessage());
 		}
 		finally {
-			// 騾壻ｿ｡邨ゆｺ�凾縺ｯ縲∵磁邯壹ｒ髢峨§繧�
+			// 通信終了時は、接続を閉じる
 			httpClient.getConnectionManager().shutdown();
 		}
 		return null;

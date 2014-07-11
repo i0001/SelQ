@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/com/rakuraku/android/ekimap/EkiInfo.java=UTF-8
 encoding//src/com/rakuraku/android/ekimap/ParseMoyori.java=UTF-8
+encoding//src/com/rakuraku/android/ekimap/SchoolInfo.java=UTF-8
 encoding//src/com/rakuraku/android/util/HttpAsyncLoader.java=UTF-8
+encoding//src/com/rakuraku/android/util/ParseJson.java=UTF-8

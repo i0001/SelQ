@@ -10,10 +10,10 @@ import com.rakuraku.android.util.ParseJson;
 public class ParseMoyori extends ParseJson {
 
 	// 駅情報のリスト
-	private List<EkiInfo> ekiinfo = new ArrayList<EkiInfo>();
+	private List<SchoolInfo> SchoolInfo = new ArrayList<SchoolInfo>();
 
-	public List<EkiInfo> getEkiinfo() {
-		return ekiinfo;
+	public List<SchoolInfo> getSchoolInfo() {
+		return SchoolInfo;
 	}
 
 	@Override
@@ -22,16 +22,16 @@ public class ParseMoyori extends ParseJson {
 		if (root != null){
 
 			// 最寄駅のイテレータを取得する（1）
-			Iterator<JsonNode> ite = root.path("response").path("station").elements();
+			Iterator<JsonNode> ite = root.path("results").path("school_kyoten").elements();
 			// 要素の取り出し（2）
 			while (ite.hasNext()) {
 				JsonNode j = ite.next();
 
 				// 駅情報のセット（3）
-				EkiInfo e = new EkiInfo();
+				SchoolInfo e = new SchoolInfo();
 
-				e.x = j.path("x").asDouble();
-				e.y = j.path("y").asDouble();
+				e.lat = j.path("x").asDouble();
+				e.lng = j.path("y").asDouble();
 
 				e.name = j.path("name").asText();
 				e.next = j.path("next").asText();
@@ -42,7 +42,7 @@ public class ParseMoyori extends ParseJson {
 				e.distance = Integer.parseInt(j.path("distance").asText().split("m")[0]);
 
 				// リストに追加（4）
-				ekiinfo.add(e);
+				SchoolInfo.add(e);
 			}
 		}
 	}
